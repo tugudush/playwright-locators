@@ -1,21 +1,21 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '@playwright/test'
 
 test('Auto-waiting feature', async ({ page }) => {
-    await page.goto('Hello.html')
+  await page.goto('Hello.html')
 
-    const button = page.locator('button')
+  const button = page.locator('button')
 
-    await button.click()
+  await button.click()
 
-    const label = page.locator('#myLabel')
+  const label = page.locator('#myLabel')
 
-    await expect(label).toBeVisible()
-});
+  await expect(label).toBeVisible()
+})
 
 test('Auto-waiting feature - one liners', async ({ page }) => {
-    await page.goto('Hello.html')
+  await page.goto('Hello.html')
 
-    await page.locator('button').click()
+  await page.locator('button').click()
 
-    await expect(page.locator('#myLabel')).toBeVisible()
-});
+  await expect(page.locator('#myLabel')).toBeVisible()
+})
