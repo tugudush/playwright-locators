@@ -1,14 +1,14 @@
-import { defineConfig, devices } from "@playwright/test";
+import { defineConfig, devices } from '@playwright/test'
 
 export default defineConfig({
-  testDir: "./tests",
+  testDir: './tests',
   webServer: {
-    command: "npm start",
-    url: "http://localhost:5000/",
+    command: 'npm start',
+    url: 'http://localhost:5000/',
     reuseExistingServer: true,
   },
   use: {
-    baseURL: "http://localhost:5000/",
-    headless: false
+    baseURL: 'http://localhost:5000/',
+    headless: false,
   },
-});
+})

@@ -1,88 +1,79 @@
 import { test, expect } from '@playwright/test'
 
 test('Fill actions', async ({ page }) => {
+  await page.goto('FeedBackForm.html')
+  const nameField = page.getByRole('textbox', { name: 'Name (required):' })
 
-    await page.goto('FeedBackForm.html');
-    const nameField = page.getByRole('textbox', { name: 'Name (required):' })
+  await nameField.fill('Alex')
 
-    await nameField.fill('Alex');
+  await nameField.fill('John')
 
-    await nameField.fill('John');
-
-    // type action is deprecated
-    await nameField.type('Alex')
-
+  // type action is deprecated
+  await nameField.type('Alex')
 })
 
 test('Check actions', async ({ page }) => {
+  await page.goto('FeedBackForm.html')
 
-    await page.goto('FeedBackForm.html')
+  const checkBox = page.getByRole('checkbox', { name: 'I agree to the site' })
 
-    const checkBox = page.getByRole('checkbox', { name: 'I agree to the site' })
+  await checkBox.check()
+  await checkBox.uncheck()
 
-    await checkBox.check();
-    await checkBox.uncheck();
-
-    await expect(checkBox).not.toBeChecked()
+  await expect(checkBox).not.toBeChecked()
 })
 
 test('Click actions', async ({ page }) => {
+  await page.goto('FeedBackForm.html')
 
-    await page.goto('FeedBackForm.html')
+  const submitButton = page.getByRole('button', {
+    name: 'Submit',
+  })
 
-    const submitButton = page.getByRole('button', {
-        name: 'Submit'
-    })
+  await submitButton.click()
 
-    await submitButton.click()
+  const saveProgressButton = page.getByRole('button', {
+    name: 'Save Progress',
+  })
 
-    const saveProgressButton = page.getByRole('button', {
-        name: 'Save Progress'
-    })
+  await saveProgressButton.click()
 
-    await saveProgressButton.click()
+  const clearProgressButton = page.getByRole('button', {
+    name: 'Clear Progress',
+  })
 
-    const clearProgressButton = page.getByRole('button', {
-        name: 'Clear Progress'
-    })
-
-    await clearProgressButton.click()
+  await clearProgressButton.click()
 })
 
 test('Selection actions', async ({ page }) => {
+  await page.goto('FeedBackForm.html')
 
-    await page.goto('FeedBackForm.html');
+  const improvementInput = page.getByLabel('Areas for Improvement')
 
-    const improvementInput = page.getByLabel('Areas for Improvement')
+  await improvementInput.selectOption('content')
 
-    await improvementInput.selectOption('content');
+  await expect(improvementInput).toHaveValue('content')
 
-    await expect(improvementInput).toHaveValue('content')
+  improvementInput.selectOption(['presentation', 'timing'])
 
-    improvementInput.selectOption(['presentation', 'timing']);
-
-    await expect(improvementInput).toHaveValues(['presentation', 'timing'])
-
+  await expect(improvementInput).toHaveValues(['presentation', 'timing'])
 })
 
 test('Click actions - with key down', async ({ page }) => {
+  await page.goto('FeedBackForm.html')
 
-    await page.goto('FeedBackForm.html');
+  const improvementInput = page.getByLabel('Areas for Improvement')
 
-    const improvementInput = page.getByLabel('Areas for Improvement')
+  const firstOption = improvementInput.getByRole('option').first()
+  const secondOption = improvementInput.getByRole('option').nth(1)
 
-    const firstOption = improvementInput.getByRole('option').first();
-    const secondOption = improvementInput.getByRole('option').nth(1);
+  await firstOption.click()
 
-    await firstOption.click();
+  await expect(improvementInput).toHaveValue('content')
 
-    await expect(improvementInput).toHaveValue('content')
+  await secondOption.click({
+    modifiers: ['Control'],
+  })
 
-    await secondOption.click({
-        modifiers: ['Control']
-    })
-
-    await expect(improvementInput).toHaveValues(['content', 'presentation']) 
+  await expect(improvementInput).toHaveValues(['content', 'presentation'])
 })
-
-
