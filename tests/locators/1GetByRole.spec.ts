@@ -27,6 +27,26 @@ test('Get by Role - list', async ({ page }) => {
   }
 })
 
+test('Get by Role - list improved approach', async ({ page }) => {
+  await page.goto('')
+
+  const servicesList = page.getByRole('list')
+  const serviceItems = servicesList.getByRole('listitem')
+
+  await expect(servicesList).toBeVisible()
+
+  // Best approach: verify the exact text of all items at once.
+  // This is more concise, retries automatically, and checks the actual content.
+  await expect(serviceItems).toHaveText([
+    'Wedding Planning',
+    'Corporate Events',
+    'Private Parties',
+    'Graduation Parties',
+    'Fundraisers',
+    'Concerts and Festivals',
+  ])
+})
+
 test('Get by Role - Buttons', async ({ page }) => {
   await page.goto('')
 
